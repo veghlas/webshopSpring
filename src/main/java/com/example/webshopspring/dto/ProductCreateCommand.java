@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductInfo {
+public class ProductCreateCommand {
     private String name;
     private ProductType productType;
     private Integer price;
-    private Integer orderId;
+    private Long orderId;
 }

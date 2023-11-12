@@ -4,6 +4,7 @@ import com.example.webshopspring.domain.Order;
 import com.example.webshopspring.domain.OrderInfo;
 import com.example.webshopspring.domain.Product;
 import com.example.webshopspring.dto.OrderCreateCommand;
+import com.example.webshopspring.dto.OrderUpdateCommand;
 import com.example.webshopspring.dto.ProductInfo;
 import com.example.webshopspring.repository.OrderRepository;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,5 +55,28 @@ public class OrderService {
             orderInfoList.add(orderInfo);
         });
         return orderInfoList;
+    }
+
+    public Order findById(Long id) {
+        Optional<Order> order = orderRepository.findById(id);
+        if (order.isEmpty()) {
+            throw new RuntimeException();
+        }
+        return order.get();
+    }
+
+    public OrderInfo getOrderById(Long id) {
+        return modelMapper.map(findById(id), OrderInfo.class);
+    }
+
+    public OrderInfo updateOrderById(Long id, OrderUpdateCommand command) {
+        Order order = findById(id);
+        modelMapper.map(command, order);
+        return modelMapper.map(order, OrderInfo.class);
+    }
+
+    public void delete(Long id) {
+        Order order = findById(id);
+        orderRepository.delete(order);
     }
 }

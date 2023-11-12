@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class ProductInfo {
+@NoArgsConstructor
+public class ProductUpdateCommand {
     private String name;
     private ProductType productType;
     private Integer price;
-    private Integer orderId;
 }
